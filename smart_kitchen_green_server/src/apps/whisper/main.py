@@ -11,6 +11,19 @@ class Mailing:
         self.host =HostInfo.objects.last()
 
         self.host_email =settings.EMAIL_HOST_USER
+
+    def send_email_to_admin(self,subject,message,from_mail):
+        subject = subject
+        html_message = render_to_string("mails/toadmin.html", {'message': message,'email':from_mail,'subject':subject})
+        plain_message = strip_tags(html_message)
+        from_email = self.host_email
+        to = [self.host_email]
+        send_mail(subject, plain_message, from_email, to, html_message=html_message)
+
+
+
+
+
     def send_email(self,template,to_email):
 
         subject = 'Verify your email'

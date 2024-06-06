@@ -1,9 +1,11 @@
 from dj_rest_auth.serializers import LoginSerializer
 from dj_rest_auth.views import LoginView
-from rest_framework import permissions, generics
+from rest_framework import permissions, generics, status
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import RetrieveUpdateAPIView
-from src.apis.accounts.serializers import UserSerializer
+from rest_framework.response import Response
+
+from src.apis.accounts.serializers import UserSerializer, VerifyEmailSerializer
 
 
 class CustomLoginView(LoginView):
@@ -35,6 +37,21 @@ User = get_user_model()
 class UserCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+
+
+class VerifyEmailView(generics.GenericAPIView):
+    serializer_class = VerifyEmailSerializer
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Email successfully verified"}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 
 
 

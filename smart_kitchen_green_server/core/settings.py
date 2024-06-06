@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'src.apps.garden.apps.GardenAppConfig',
     'src.apps.accounts.apps.AccountsAppConfig',
     'src.apps.whisper.apps.WhisperConfig',
+    'src.apps.website.apps.WebsiteConfig',
     # REST APP
 
     'rest_framework',
@@ -143,11 +144,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 
 
