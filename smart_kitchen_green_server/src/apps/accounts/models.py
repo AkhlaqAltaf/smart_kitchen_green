@@ -1,3 +1,6 @@
+import uuid
+import  random
+
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 class CustomUserManager(BaseUserManager):
@@ -27,6 +30,8 @@ class CustomUserManager(BaseUserManager):
 
 class CustomUser(AbstractBaseUser):
     email = models.EmailField(unique=True)
+    verification_code = models.CharField(max_length=32, unique=True, blank=True, null=True)
+    is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
@@ -51,3 +56,14 @@ class CustomUser(AbstractBaseUser):
         Does the user have permissions to view the app `app_label`?
         """
         return self.is_superuser
+
+    def save(self, *args, **kwargs):
+        if not self.verification_code:
+            self.verification_code = self.generate_verification_code()
+        super().save(*args, **kwargs)
+
+    def generate_verification_code(self):
+        while True:
+            code = '{:04d}'.format(random.randint(0, 9999))
+            if not CustomUser.objects.filter(verification_code=code).exists():
+                return code

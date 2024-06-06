@@ -3,3 +3,8 @@ dj-rest-auth
 drf-yasg
 django-cors-headers
 djangorestframework
+django-allauth
+
+mailchimp_transactional
+django-environ
+django-notifications-hq

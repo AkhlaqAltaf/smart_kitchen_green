@@ -35,3 +35,7 @@ User = get_user_model()
 class UserCreateView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+
+

@@ -1,11 +1,6 @@
-from django.urls import path, re_path
-
-from dj_rest_auth.views import (
-    LogoutView, PasswordChangeView ,LoginView ,GenericAPIView
-)
-from .views import (
-    UserRetrieveChangeAPIView, CustomLoginView, UserCreateView
-)
+from django.urls import path, include
+from dj_rest_auth.views import LogoutView, PasswordChangeView, LoginView
+from .views import UserCreateView
 
 app_name = 'accounts'
 urlpatterns = [
