@@ -40,4 +40,4 @@ class ContactUsView(View):
 
 class ApiReverse(View):
     def get(self,request):
-        return reverse('api:api')
+        return reverse('api:api/')

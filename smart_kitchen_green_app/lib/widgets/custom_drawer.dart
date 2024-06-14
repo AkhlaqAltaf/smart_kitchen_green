@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smart_kitchen_green_app/routes/routes.dart';
+import 'package:smart_kitchen_green_app/storage/auth_storage.dart';
 
 Drawer drawer(BuildContext context) {
-
   bool isLogin = false;
   return Drawer(
       width: MediaQuery.of(context).size.width * 0.8,
@@ -40,6 +40,21 @@ Drawer drawer(BuildContext context) {
                   },
                 ),
                 ListTile(
+                  leading: const Icon(Icons.add, size: 24),
+                  title: const Text(
+                    'Add Product',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed(AppRoutes.addkitchenProduct);
+                    // downloadInvitationCard(context, 4);
+                    // Navigator.pop(context);
+                  },
+                ),
+                ListTile(
                   leading: const Icon(
                     Icons.list,
                     size: 24,
@@ -55,10 +70,6 @@ Drawer drawer(BuildContext context) {
                     // Navigator.pushNamed(context, SettingsScreen.routeName);
                   },
                 ),
-
-
-
-                isLogin?
                 ListTile(
                   leading: const RotationTransition(
                     turns: AlwaysStoppedAnimation(180 / 360),
@@ -93,6 +104,8 @@ Drawer drawer(BuildContext context) {
                             TextButton(
                               child: const Text('Logout'),
                               onPressed: () {
+                                clearData();
+
                                 Navigator.pushNamed(
                                     context, AppRoutes.loginScreen);
                               },
@@ -102,19 +115,7 @@ Drawer drawer(BuildContext context) {
                       },
                     );
                   },
-                ):ListTile(leading: const Icon(
-                  Icons.login,
-                  size: 24,
-                ),
-                  title: const Text(
-                    'Login',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pushNamed(AppRoutes.loginScreen);
-                  },),
+                )
               ],
             ),
           )

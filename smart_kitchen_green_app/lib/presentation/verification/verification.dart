@@ -1,40 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:smart_kitchen_green_app/apis/auth_apis/signin_api.dart';
-import 'package:smart_kitchen_green_app/data_layer/auth/auth_model.dart';
+import 'package:smart_kitchen_green_app/apis/auth_apis/email_verification_api.dart';
+import 'package:smart_kitchen_green_app/data_layer/auth/verification_model.dart';
+import 'package:smart_kitchen_green_app/storage/auth_storage.dart';
 import 'package:smart_kitchen_green_app/widgets/custom_appbar.dart';
 import 'package:smart_kitchen_green_app/widgets/custom_drawer.dart';
 import '../../routes/routes.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class Verification extends StatefulWidget {
+  const Verification({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<Verification> createState() => _VerificationState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _VerificationState extends State<Verification> {
   TextEditingController? emailController;
-  TextEditingController? passwordController;
+  TextEditingController? code;
 
   @override
   void initState() {
     super.initState();
     emailController = TextEditingController();
-    passwordController = TextEditingController();
+    code = TextEditingController();
+    userEmail();
+  }
+
+  void userEmail() async {
+    emailController!.text = (await getUserEmail())!;
   }
 
   @override
   void dispose() {
     super.dispose();
     emailController!.dispose();
-    passwordController!.dispose();
+    code!.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: drawer(context),
-      appBar: appBar("SignIn"),
+      appBar: appBar("Verification"),
       body: Stack(
         fit: StackFit.expand,
         children: [
@@ -68,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: emailController,
                         decoration: InputDecoration(
                           label: Text("Email"),
-                          hintText: 'example@gmail.com',
+                          enabled: false,
                           filled: true,
                           fillColor: Colors.white.withOpacity(0.4),
                           border: OutlineInputBorder(
@@ -79,10 +85,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 20),
                       // Password TextFormField
                       TextFormField(
-                        controller: passwordController,
+                        controller: code,
                         decoration: InputDecoration(
-                          label: Text("Password"),
-                          hintText: 'Password',
+                          label: Text("Verification Code"),
+                          hintText: '4 Digit Code',
                           filled: true,
                           fillColor: Colors.white.withOpacity(0.4),
                           border: OutlineInputBorder(
@@ -112,11 +118,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           onPressed: () async {
-                            Auth model = Auth(
-                                email: emailController!.text,
-                                password: passwordController!.text);
-
-                            await signInUser(model, context);
+                            EmailVerification verificationModel =
+                                EmailVerification(
+                                    email: emailController!.text,
+                                    code: code!.text);
+                            await verifEmail(verificationModel, context);
                           },
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -127,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 size: 25,
                               ),
                               Text(
-                                'Login',
+                                'Verify',
                                 style: TextStyle(fontSize: 20),
                               )
                             ],
@@ -135,22 +141,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: 20,
                       ),
-                      TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, AppRoutes.signUpScreen);
-                          },
-                          child: RichText(
-                              text: TextSpan(
-                                  style: TextStyle(fontSize: 16),
-                                  children: [
-                                TextSpan(text: "If You have Not An Account"),
-                                TextSpan(text: "   "),
-                                TextSpan(
-                                    text: "Register",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold))
-                              ])))
                     ],
                   ),
                 ),
