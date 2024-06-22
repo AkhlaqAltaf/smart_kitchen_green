@@ -93,7 +93,10 @@ Drawer drawer(BuildContext context) {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: const Text('Are you sure?'),
-                          content: const Text('Would you like to logout?'),
+                          content: const Text(
+                            'Would you like to logout?',
+                            style: TextStyle(color: Colors.white),
+                          ),
                           actions: [
                             TextButton(
                               child: const Text('Cancel'),

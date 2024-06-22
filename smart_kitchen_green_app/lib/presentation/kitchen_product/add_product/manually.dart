@@ -17,22 +17,26 @@ class _AddManuallyState extends State<AddManually> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           TextFormField(
-            decoration: InputDecoration(labelText: 'Product Name'),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          TextFormField(
             decoration: InputDecoration(
-                labelText: 'Quantity',
-                hintText: "2",
-                prefixIcon: Icon(Icons.numbers)),
+                labelText: 'Product Name', prefixIcon: Icon(Icons.text_fields)),
           ),
           SizedBox(
             height: 30,
           ),
           TextFormField(
-            decoration: InputDecoration(labelText: 'Expiry Date'),
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+                labelText: 'Quantity', prefixIcon: Icon(Icons.numbers)),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          TextFormField(
+            keyboardType: TextInputType.datetime,
+            decoration: InputDecoration(
+                hintText: "YYYY-MM-DD",
+                labelText: 'Expiry Date',
+                prefixIcon: Icon(Icons.date_range)),
           ),
           SizedBox(
             height: 30,

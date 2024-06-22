@@ -15,6 +15,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   TextEditingController? emailController;
   TextEditingController? passwordController;
+  bool isVisible = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -35,15 +36,10 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: drawer(context),
-      appBar: appBar("SignUp"),
+      // drawer: drawer(context),
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(
-            'assets/images/b.jpg',
-            fit: BoxFit.cover,
-          ),
           SingleChildScrollView(
             child: Column(
               children: [
@@ -69,50 +65,29 @@ class _SignupScreenState extends State<SignupScreen> {
                       TextFormField(
                         controller: emailController,
                         decoration: InputDecoration(
-                          hintText: "example@gmail.com",
-                          label: Text('Email'),
-                          filled: true,
-                          fillColor: Colors.white.withOpacity(0.4),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
+                            label: Text("Email"),
+                            prefixIcon: Icon(Icons.email)),
                       ),
                       SizedBox(height: 20),
                       // Password TextFormField
                       TextFormField(
                         controller: passwordController,
                         decoration: InputDecoration(
-                          hintText: 'Password',
-                          label: Text("Password"),
-                          filled: true,
-                          fillColor: Colors.white.withOpacity(0.4),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                        obscureText: true,
+                            label: Text("Password"),
+                            prefixIcon: Icon(Icons.password),
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    isVisible = !isVisible;
+                                  });
+                                },
+                                icon: Icon(isVisible
+                                    ? Icons.visibility_off
+                                    : Icons.visibility))),
+                        obscureText: !isVisible,
                       ),
                       SizedBox(height: 20),
-                      // Login Button
-                      TextButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                              Theme.of(context).primaryColor,
-                            ),
-                            foregroundColor: MaterialStateProperty.all<Color>(
-                              Colors.white,
-                            ),
-                            padding: MaterialStateProperty.all<EdgeInsets>(
-                              EdgeInsets.symmetric(vertical: 15.0),
-                            ),
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                          ),
+                      ElevatedButton(
                           onPressed: () async {
                             Auth auth = Auth(
                                 email: emailController!.text,
@@ -129,27 +104,32 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                               Text(
                                 'Register',
-                                style: TextStyle(fontSize: 20),
                               )
                             ],
                           )),
+                      // Login Button
+
                       SizedBox(
                         height: 20,
                       ),
                       TextButton(
                           onPressed: () {
+                            Navigator.pop(context);
                             Navigator.pushNamed(context, AppRoutes.loginScreen);
                           },
                           child: RichText(
                               text: TextSpan(
                                   style: TextStyle(fontSize: 16),
                                   children: [
-                                TextSpan(text: "If You have An Account"),
+                                TextSpan(
+                                    text: "If You have An Account",
+                                    style: TextStyle(color: Colors.black)),
                                 TextSpan(text: "   "),
                                 TextSpan(
                                     text: "Login",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold))
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black))
                               ])))
                     ],
                   ),
@@ -163,3 +143,66 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// OPTIONAL 
+
+
+//                       TextButton(
+//                           style: ButtonStyle(
+//                             backgroundColor: MaterialStateProperty.all<Color>(
+//                               Theme.of(context).primaryColor,
+//                             ),
+//                             foregroundColor: MaterialStateProperty.all<Color>(
+//                               Colors.white,
+//                             ),
+//                             padding: MaterialStateProperty.all<EdgeInsets>(
+//                               EdgeInsets.symmetric(vertical: 15.0),
+//                             ),
+//                             shape: MaterialStateProperty.all<
+//                                 RoundedRectangleBorder>(
+//                               RoundedRectangleBorder(
+//                                 borderRadius: BorderRadius.circular(10.0),
+//                               ),
+//                             ),
+//                           ),
+//                           onPressed: () async {
+//                             Auth auth = Auth(
+//                                 email: emailController!.text,
+//                                 password: passwordController!.text);
+//                             await registerUser(auth, context);
+//                           },
+//                           child: Row(
+//                             crossAxisAlignment: CrossAxisAlignment.center,
+//                             mainAxisAlignment: MainAxisAlignment.center,
+//                             children: [
+//                               Icon(
+//                                 Icons.app_registration,
+//                                 size: 25,
+//                               ),
+//                               Text(
+//                                 'Register',
+//                                 style: TextStyle(fontSize: 20),
+//                               )
+//                             ],
+//                           )),

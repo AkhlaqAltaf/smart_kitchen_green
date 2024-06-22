@@ -83,7 +83,8 @@ class ThemeHelper {
           ),
           shadowColor: appTheme.black900.withOpacity(0.5),
           backgroundColor: PrimaryColors().gray50,
-          textStyle: TextStyle(color: Colors.white, fontSize: 15),
+          textStyle: TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           elevation: 4,
           fixedSize: Size(250, 50),
           visualDensity: const VisualDensity(

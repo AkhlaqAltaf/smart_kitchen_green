@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_kitchen_green_app/routes/routes.dart';
+import 'package:smart_kitchen_green_app/storage/auth_storage.dart';
 import 'package:smart_kitchen_green_app/theme/theme_helper.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,7 +13,11 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   void checkUser() {
     Future.delayed(const Duration(seconds: 4), () async {
-      Navigator.pushNamed(context, AppRoutes.homeScreen);
+      if (getToken() != null) {
+        Navigator.pushNamed(context, AppRoutes.homeScreen);
+      } else {
+        Navigator.pushNamed(context, AppRoutes.homeScreen);
+      }
     });
   }
 

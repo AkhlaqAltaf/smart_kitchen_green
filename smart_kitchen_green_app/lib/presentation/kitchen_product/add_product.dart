@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smart_kitchen_green_app/data_layer/kitchen/kitchen_product.dart';
-import 'package:smart_kitchen_green_app/presentation/kitchen_product/barcode_scanner.dart';
-import 'package:smart_kitchen_green_app/presentation/kitchen_product/manually.dart';
+import 'package:smart_kitchen_green_app/presentation/kitchen_product/add_product/barcode.dart';
+import 'package:smart_kitchen_green_app/presentation/kitchen_product/add_product/manually.dart';
+import 'package:smart_kitchen_green_app/presentation/kitchen_product/add_product/voice.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({super.key});
@@ -21,7 +22,6 @@ class _AddProductState extends State<AddProduct> with WidgetsBindingObserver {
     _widgetOptions = [
       _buildManualEntry(),
       _buildScanner(),
-      _buildVoiceEntry(),
     ];
   }
 
@@ -38,28 +38,11 @@ class _AddProductState extends State<AddProduct> with WidgetsBindingObserver {
   }
 
   Widget _buildManualEntry() {
-    return AddManually();
+    return AddWithVoice();
   }
 
   Widget _buildScanner() {
     return BarcodeScannerPage();
-  }
-
-  void _saveScannedProduct(String scannedData) async {
-    Product product = Product(
-      name: 'Scanned Product',
-      quantity: '1',
-      expiryDate: '2024-12-31',
-    );
-    // Insert the product into the database here
-    // Show snackbar only once per scan
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Product added to database')),
-    );
-  }
-
-  Widget _buildVoiceEntry() {
-    return Center(child: Text("It Is In Developement Process"));
   }
 
   List<Widget> _widgetOptions = [];
@@ -75,15 +58,11 @@ class _AddProductState extends State<AddProduct> with WidgetsBindingObserver {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.edit),
-            label: 'Manual',
+            label: 'Manual/Voice',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.qr_code_scanner),
             label: 'Scan',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.mic),
-            label: 'Voice',
           ),
         ],
         currentIndex: _selectedIndex,
