@@ -39,11 +39,13 @@ dependencies:
   cupertino_icons: ^1.0.6
   qr_code_scanner: ^1.0.1
   mobile_scanner: ^5.1.1
+  barcode_scan2: ^4.3.1
 
   # APIS
 
   http: 
   shared_preferences:
+  
 
 
 dev_dependencies:

@@ -43,14 +43,31 @@ class ThemeHelper {
     var colorScheme =
         _supportedColorScheme[_appTheme] ?? ColorSchemes.primaryColorScheme;
     return ThemeData(
+      //------------------TEXTFORMFIELD THEME--------------------------------------//////
+      inputDecorationTheme: InputDecorationTheme(
+          labelStyle: TextStyle(color: Colors.green),
+          filled: true,
+          fillColor: Colors.white.withOpacity(0.4),
+          hintStyle: TextStyle(color: Colors.green),
+          suffixIconColor: Colors.green[700]!,
+          prefixIconColor: Colors.green[700]!,
+          iconColor: Colors.green[700]!,
+          errorStyle: TextStyle(color: Colors.red),
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderSide: BorderSide(
+                  color: const Color.fromARGB(255, 142, 56, 56)!, width: 1)),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderSide: BorderSide(color: Colors.green[700]!, width: 1))),
+
       visualDensity: VisualDensity.standard,
       colorScheme: colorScheme,
       textTheme: TextThemes.textTheme(colorScheme),
       scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
       appBarTheme: AppBarTheme(
-        backgroundColor:
-        Colors.green[700],
-           // Replace this with the extracted color
+        backgroundColor: Colors.green[700],
+        // Replace this with the extracted color
         iconTheme: IconThemeData(color: Colors.white), // Icon color
         titleTextStyle: TextStyle(
           color: Colors.white, // Title text color
@@ -64,8 +81,11 @@ class ThemeHelper {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          shadowColor: appTheme.black900.withOpacity(0.25),
+          shadowColor: appTheme.black900.withOpacity(0.5),
+          backgroundColor: PrimaryColors().gray50,
+          textStyle: TextStyle(color: Colors.white, fontSize: 15),
           elevation: 4,
+          fixedSize: Size(250, 50),
           visualDensity: const VisualDensity(
             vertical: -4,
             horizontal: -4,
