@@ -1,4 +1,4 @@
-const String serverUrl = 'http://192.168.250.216:8000';
+const String serverUrl = 'http://192.168.1.3:8000';
 
 // AUTH APIS
 
@@ -9,3 +9,7 @@ const String registerUserUrl = '$authUrl/register/';
 const String signinUserUrl = '$authUrl/login/';
 
 const String verifyEmailUrl = '$authUrl/verify-email/';
+
+// KICTHEN PRODUCTS
+
+const String kitchenProductUrl = '$serverUrl/api/kitchen/product/';

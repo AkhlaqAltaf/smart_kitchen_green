@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:barcode_scan2/barcode_scan2.dart';
 
 import 'package:smart_kitchen_green_app/apis/kitchen_apis/barcode_info.dart';
+import 'package:smart_kitchen_green_app/data_layer/kitchen/kitchen_product.dart';
+import 'package:smart_kitchen_green_app/presentation/kitchen_product/product_list/temp_list_products.dart';
 
 class BarcodeScannerPage extends StatefulWidget {
   @override
@@ -25,8 +27,9 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
         _scanResult = result.rawContent;
       });
       _info = await fetchProductDetails(result.rawContent);
+
       if (_info != null) {
-        fecthIformation(_info!);
+        fecthIformation(_info!, result.rawContent);
       }
     } catch (e) {
       setState(() {
@@ -35,11 +38,19 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
     }
   }
 
-  void fecthIformation(Map<String, dynamic> info) {
+  void fecthIformation(Map<String, dynamic> info, code) {
     setState(() {
       productName = info['product_name'];
       entryDate = info['entry_dates_tags'].toString();
       expiryDate = info['expiration-date-to-be-completed'] ?? "-----";
+
+      Product product = Product.add(
+          name: productName,
+          quantity: 1,
+          expiryDate: expiryDate,
+          barcode: code);
+
+      Products.addProduct(product);
     });
   }
 
@@ -50,6 +61,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(height: 30),
             Text(_scanResult),
             SizedBox(height: 20),
             ElevatedButton(
@@ -63,9 +75,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
               child: Text('Scan Barcode'),
             ),
             SizedBox(height: 20),
-            Text(productName),
-            Text(entryDate),
-            Text(expiryDate),
+            TempListProducts(),
           ],
         ),
       ),

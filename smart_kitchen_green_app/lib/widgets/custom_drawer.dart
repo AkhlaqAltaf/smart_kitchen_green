@@ -40,16 +40,15 @@ Drawer drawer(BuildContext context) {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.add, size: 24),
+                  leading: const Icon(Icons.kitchen_outlined, size: 24),
                   title: const Text(
-                    'Add Product',
+                    'kitchen Products',
                     style: TextStyle(
                       fontSize: 16,
                     ),
                   ),
                   onTap: () {
-                    Navigator.of(context)
-                        .pushNamed(AppRoutes.addkitchenProduct);
+                    Navigator.of(context).pushNamed(AppRoutes.kitchenProducts);
                     // downloadInvitationCard(context, 4);
                     // Navigator.pop(context);
                   },

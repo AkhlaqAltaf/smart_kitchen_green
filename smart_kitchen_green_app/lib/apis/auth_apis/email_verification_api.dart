@@ -14,7 +14,6 @@ Future<void> verifEmail(EmailVerification model, BuildContext context) async {
       flashMessage(context, 'success', response.body.toString());
     } else {
       flashMessage(context, 'error', response.body);
-
       Navigator.pushNamed(context, AppRoutes.signUpScreen);
     }
   } catch (e) {

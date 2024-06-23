@@ -3,6 +3,7 @@ import 'package:smart_kitchen_green_app/data_layer/kitchen/kitchen_product.dart'
 import 'package:smart_kitchen_green_app/presentation/kitchen_product/add_product/barcode.dart';
 import 'package:smart_kitchen_green_app/presentation/kitchen_product/add_product/manually.dart';
 import 'package:smart_kitchen_green_app/presentation/kitchen_product/add_product/voice.dart';
+import 'package:smart_kitchen_green_app/widgets/custom_drawer.dart';
 
 class AddProduct extends StatefulWidget {
   const AddProduct({super.key});
@@ -53,6 +54,7 @@ class _AddProductState extends State<AddProduct> with WidgetsBindingObserver {
       appBar: AppBar(
         title: Text('Add Product'),
       ),
+      drawer: drawer(context),
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

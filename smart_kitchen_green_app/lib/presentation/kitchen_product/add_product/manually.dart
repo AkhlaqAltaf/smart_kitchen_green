@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_kitchen_green_app/presentation/kitchen_product/product_list/temp_list_products.dart';
 
 class AddManually extends StatefulWidget {
   const AddManually({super.key});
@@ -43,11 +44,10 @@ class _AddManuallyState extends State<AddManually> {
           ),
           SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
-              // Handle the form submission here
-            },
+            onPressed: () {},
             child: Text('Add Product'),
           ),
+          TempListProducts(),
         ],
       ),
     ));

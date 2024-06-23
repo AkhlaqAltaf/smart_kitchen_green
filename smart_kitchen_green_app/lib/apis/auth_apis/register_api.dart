@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:smart_kitchen_green_app/apis/urls/urls.dart';
 import 'package:smart_kitchen_green_app/data_layer/auth/auth_model.dart';
-import 'package:smart_kitchen_green_app/presentation/verification/verification.dart';
+import 'package:smart_kitchen_green_app/presentation/auth_screens/verification/verification.dart';
 import 'package:smart_kitchen_green_app/storage/auth_storage.dart';
 import 'package:smart_kitchen_green_app/widgets/flashMessage.dart';
 
