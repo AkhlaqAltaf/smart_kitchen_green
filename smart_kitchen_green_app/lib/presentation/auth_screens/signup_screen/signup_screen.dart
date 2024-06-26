@@ -18,6 +18,7 @@ class _SignupScreenState extends State<SignupScreen> {
   TextEditingController? passwordController;
   TextEditingController? confirmPasswordController;
   bool isVisible = false;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -144,22 +145,34 @@ class _SignupScreenState extends State<SignupScreen> {
                               email: emailController!.text,
                               password: passwordController!.text,
                             );
-                            await registerUser(auth, context);
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            try {
+                              await registerUser(auth, context);
+                            } catch (e) {
+                            } finally {
+                              setState(() {
+                                _isLoading = false;
+                              });
+                            }
                           }
                         },
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.app_registration,
-                              size: 25,
-                            ),
-                            Text(
-                              'Register',
-                            ),
-                          ],
-                        ),
+                        child: _isLoading
+                            ? CircularProgressIndicator()
+                            : Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.app_registration,
+                                    size: 25,
+                                  ),
+                                  Text(
+                                    'Register',
+                                  ),
+                                ],
+                              ),
                       ),
                       SizedBox(
                         height: 20,

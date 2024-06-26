@@ -15,6 +15,7 @@ class _VerificationState extends State<Verification> {
   List<TextEditingController> codeControllers =
       List.generate(4, (index) => TextEditingController());
 
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -35,7 +36,7 @@ class _VerificationState extends State<Verification> {
     }
   }
 
-  void verifyCode() async {
+  Future<void> verifyCode() async {
     String code = codeControllers.map((controller) => controller.text).join();
     EmailVerification verificationModel =
         EmailVerification(email: emailController!.text, code: code);
@@ -91,18 +92,30 @@ class _VerificationState extends State<Verification> {
                       ),
                       SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: verifyCode,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.login, size: 25),
-                            Text(
-                              'Verify',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ],
-                        ),
+                        onPressed: () async {
+                          setState(() {
+                            _isLoading = true;
+                          });
+                          try {
+                            await verifyCode();
+                          } catch (e) {
+                          } finally {
+                            _isLoading = false;
+                          }
+                        },
+                        child: _isLoading
+                            ? CircularProgressIndicator()
+                            : Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.login, size: 25),
+                                  Text(
+                                    'Verify',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ],
+                              ),
                       ),
                       SizedBox(height: 20),
                     ],

@@ -19,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController? emailController;
   TextEditingController? passwordController;
   bool isVisibale = false;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -123,22 +124,35 @@ class _LoginScreenState extends State<LoginScreen> {
                               email: emailController!.text,
                               password: passwordController!.text,
                             );
-                            await signInUser(model, context);
+                            setState(() {
+                              _isLoading = true;
+                            });
+
+                            try {
+                              await signInUser(model, context);
+                            } catch (e) {
+                            } finally {
+                              setState(() {
+                                _isLoading = false;
+                              });
+                            }
                           }
                         },
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.login,
-                              size: 25,
-                            ),
-                            Text(
-                              'Login',
-                            ),
-                          ],
-                        ),
+                        child: _isLoading
+                            ? CircularProgressIndicator()
+                            : Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.login,
+                                    size: 25,
+                                  ),
+                                  Text(
+                                    'Login',
+                                  ),
+                                ],
+                              ),
                       ),
                       SizedBox(
                         height: 20,
