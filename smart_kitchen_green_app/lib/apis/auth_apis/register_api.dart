@@ -9,7 +9,7 @@ import 'package:smart_kitchen_green_app/widgets/flashMessage.dart';
 Future<void> registerUser(Auth model, BuildContext context) async {
   try {
     final response = await http.post(
-      Uri.parse(registerUserUrl),
+      Uri.parse(Urls.registerUserUrl),
       body: model.toJson(),
     );
 

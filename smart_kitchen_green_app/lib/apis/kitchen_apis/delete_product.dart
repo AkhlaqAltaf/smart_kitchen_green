@@ -9,7 +9,7 @@ Future<void> deleteProduct(BuildContext context, int id) async {
 
   try {
     var response = await http.delete(
-      Uri.parse('$kitchenProductUrl$id/'),
+      Uri.parse('${Urls.kitchenProductUrl}$id/'),
       headers: {
         'Authorization': 'TOKEN $token',
         'Content-Type': 'application/json; charset=UTF-8',

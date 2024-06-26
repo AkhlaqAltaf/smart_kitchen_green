@@ -19,7 +19,7 @@ Future<void> addKitchenProducts(
     }
 
     var response = await http.post(
-      Uri.parse(kitchenProductUrl),
+      Uri.parse(Urls.kitchenProductUrl),
       body: productsData.toString(),
       headers: {
         'Authorization': 'TOKEN $token',

@@ -12,7 +12,7 @@ Future<List<Product>> fetchKitchenProducts(BuildContext context) async {
 
   try {
     var response = await http.get(
-      Uri.parse(kitchenProductUrl),
+      Uri.parse(Urls.kitchenProductUrl),
       headers: {
         'Authorization': 'TOKEN $token',
         'Content-Type': 'application/json; charset=UTF-8',

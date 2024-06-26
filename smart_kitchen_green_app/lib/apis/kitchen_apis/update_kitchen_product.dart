@@ -14,7 +14,7 @@ Future<void> updateKitchenProduct(BuildContext context, Product product) async {
 
   try {
     var response = await http.put(
-      Uri.parse('$kitchenProductUrl$id/'),
+      Uri.parse('${Urls.kitchenProductUrl}$id/'),
       body: jsonData.toString(),
       headers: {
         'Authorization': 'TOKEN $token',

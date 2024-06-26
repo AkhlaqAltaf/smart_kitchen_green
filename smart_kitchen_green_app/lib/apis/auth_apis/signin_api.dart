@@ -11,7 +11,7 @@ import 'package:smart_kitchen_green_app/widgets/flashMessage.dart';
 Future<void> signInUser(Auth model, BuildContext context) async {
   try {
     final response =
-        await http.post(Uri.parse(signinUserUrl), body: model.toJson());
+        await http.post(Uri.parse(Urls.signinUserUrl), body: model.toJson());
     if (response.statusCode < 300) {
       var decodedResponse = await jsonDecode(response.body);
       String token = decodedResponse['key'];

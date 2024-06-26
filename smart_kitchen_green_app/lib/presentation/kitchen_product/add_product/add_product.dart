@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_kitchen_green_app/data_layer/kitchen/kitchen_product.dart';
 import 'package:smart_kitchen_green_app/presentation/kitchen_product/add_product/barcode.dart';
-import 'package:smart_kitchen_green_app/presentation/kitchen_product/add_product/manually.dart';
 import 'package:smart_kitchen_green_app/presentation/kitchen_product/add_product/voice.dart';
 import 'package:smart_kitchen_green_app/widgets/custom_drawer.dart';
 

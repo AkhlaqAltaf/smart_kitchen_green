@@ -150,10 +150,10 @@ class _AddWithVoiceState extends State<AddWithVoice> {
                     SizedBox(height: 20),
                     TextFormField(
                       controller: _quantityController,
-                      keyboardType: TextInputType.number,
+                      keyboardType: TextInputType.text,
                       decoration: InputDecoration(
                         labelText: 'Quantity',
-                        prefixIcon: Icon(Icons.numbers),
+                        prefixIcon: Icon(Icons.line_weight),
                         suffixIcon: IconButton(
                           icon: Icon(Icons.mic),
                           onPressed: () => _listen(_quantityController),
@@ -162,9 +162,8 @@ class _AddWithVoiceState extends State<AddWithVoice> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter a quantity';
-                        } else if (int.tryParse(value) == null) {
-                          return 'Please enter a valid number';
                         }
+
                         return null;
                       },
                     ),
