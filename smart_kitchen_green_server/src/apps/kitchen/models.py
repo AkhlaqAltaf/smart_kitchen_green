@@ -7,14 +7,15 @@ from core import settings
 class Product(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    quantity = models.PositiveIntegerField()
-    expiry_date = models.DateField()
+    quantity = models.CharField(max_length=50)
+    expiry_date = models.CharField(max_length=50)
+    barcode = models.CharField(max_length=50,null=True,blank=True)
     type_choices = [
         ('CAN_USE', 'Can Use Appliance'),
         ('CANNOT_USE', 'Cannot Use Appliance'),
     ]
-    type = models.CharField(max_length=20, choices=type_choices)
-    appliance_time = models.PositiveIntegerField(null=True, blank=True)
+    type = models.CharField(max_length=20, choices=type_choices,blank=True,null=True)
+    appliance_time = models.CharField(max_length=50,null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

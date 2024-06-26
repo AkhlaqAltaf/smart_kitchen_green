@@ -18,7 +18,9 @@ class CustomLoginView(LoginView):
         if request.user.is_authenticated:
             user = request.user
             Token.objects.filter(user=user).delete()
+
             new_token = Token.objects.create(user=user)
+
             response.data['key'] = new_token.key
         return response
 

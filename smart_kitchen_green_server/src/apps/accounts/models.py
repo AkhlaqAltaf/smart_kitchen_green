@@ -52,8 +52,9 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser):
+
     email = models.EmailField(unique=True)
-    verification_code = models.CharField(max_length=32, unique=True, blank=True, null=True)
+    verification_code = models.CharField(max_length=32, unique=False, blank=True, null=True)
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
