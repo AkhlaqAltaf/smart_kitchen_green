@@ -217,7 +217,7 @@ class _AddWithVoiceState extends State<AddWithVoice> {
                         if (_formKey.currentState!.validate()) {
                           Product product = Product.add(
                             name: _productNameController.text,
-                            quantity: int.parse(_quantityController.text),
+                            quantity: _quantityController.text,
                             expiryDate: _expiryDateController.text,
                             barcode: _barcodeController.text,
                           );

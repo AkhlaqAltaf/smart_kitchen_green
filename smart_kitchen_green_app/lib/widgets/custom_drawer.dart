@@ -53,22 +53,22 @@ Drawer drawer(BuildContext context) {
                     // Navigator.pop(context);
                   },
                 ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.list,
-                    size: 24,
-                  ),
-                  title: const Text(
-                    'Settings',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  onTap: () {
-                    // Navigator.pop(context);
-                    // Navigator.pushNamed(context, SettingsScreen.routeName);
-                  },
-                ),
+                // ListTile(
+                //   leading: const Icon(
+                //     Icons.list,
+                //     size: 24,
+                //   ),
+                //   title: const Text(
+                //     'Settings',
+                //     style: TextStyle(
+                //       fontSize: 16,
+                //     ),
+                //   ),
+                //   onTap: () {
+                //     // Navigator.pop(context);
+                //     // Navigator.pushNamed(context, SettingsScreen.routeName);
+                //   },
+                // ),
                 ListTile(
                   leading: const RotationTransition(
                     turns: AlwaysStoppedAnimation(180 / 360),

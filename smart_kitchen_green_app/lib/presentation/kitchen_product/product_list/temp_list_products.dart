@@ -74,7 +74,7 @@ class _TempListProductsState extends State<TempListProducts> {
                           onChanged: (value) {
                             setState(() {
                               Products.getProducts()[index].quantity =
-                                  int.tryParse(value) ?? 0;
+                                  value ?? "";
                             });
                           },
                           validator: (value) {

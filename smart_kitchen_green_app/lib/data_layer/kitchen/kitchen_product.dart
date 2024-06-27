@@ -3,7 +3,7 @@ import 'dart:io';
 class Product {
   int? id = 0;
   String name;
-  int quantity;
+  String quantity;
   String expiryDate;
   String barcode;
   String? type;
@@ -22,7 +22,7 @@ class Product {
   Map<String, dynamic> toJson() {
     return {
       'name': name.toString(),
-      'quantity': quantity,
+      'quantity': quantity.toString(),
       'expiry_date': expiryDate.toString(),
       'barcode': barcode.toString(),
       'type': type,
@@ -34,7 +34,7 @@ class Product {
     return Product.get(
         json['id'],
         json['name'],
-        int.parse(json['quantity']),
+        json['quantity'],
         json['expiry_date'],
         json['barcode'] ?? "",
         json['created_at'] ?? "",
@@ -48,17 +48,7 @@ class Products {
 
   static void addProduct(Product product) {
     print("PRODUCT ADDED:${product}");
-    for (var e in products) {
-      print("Iterators");
-      if (e.barcode.isNotEmpty && e.barcode == product.barcode) {
-        print("BARCODE EQAUL");
-        e.quantity += 1;
-        return;
-      } else if (e.name == product.name && e.expiryDate == product.expiryDate) {
-        e.quantity++;
-        return;
-      }
-    }
+
     print("ADDED");
     products.add(product);
     return;

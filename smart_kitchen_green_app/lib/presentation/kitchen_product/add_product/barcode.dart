@@ -46,7 +46,7 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
 
       Product product = Product.add(
           name: productName,
-          quantity: 1,
+          quantity: '1',
           expiryDate: expiryDate,
           barcode: code);
 
