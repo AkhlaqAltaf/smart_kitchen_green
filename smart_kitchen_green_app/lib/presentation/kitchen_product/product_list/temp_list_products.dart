@@ -81,9 +81,7 @@ class _TempListProductsState extends State<TempListProducts> {
                             if (value == null || value.isEmpty) {
                               return 'Please enter quantity';
                             }
-                            if (int.tryParse(value) == null) {
-                              return 'Quantity should be a number';
-                            }
+
                             return null;
                           },
                           keyboardType: TextInputType.number,
