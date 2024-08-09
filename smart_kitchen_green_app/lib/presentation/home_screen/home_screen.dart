@@ -18,6 +18,8 @@ class HomeScreen extends StatelessWidget {
             height: 150.0,
             width: 150.0,
           ),
+          Text("WELCOME BACK TO DEVELOPEMENT 8/10/2024",
+              style: TextStyle(color: Colors.red)),
           SizedBox(height: 20),
           SizedBox(height: 10),
           Text(
