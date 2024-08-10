@@ -53,6 +53,20 @@ Drawer drawer(BuildContext context) {
                     // Navigator.pop(context);
                   },
                 ),
+                ListTile(
+                  leading: const Icon(Icons.emoji_nature_outlined, size: 24),
+                  title: const Text(
+                    'Plants',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(AppRoutes.kitchenProducts);
+                    // downloadInvitationCard(context, 4);
+                    // Navigator.pop(context);
+                  },
+                ),
                 // ListTile(
                 //   leading: const Icon(
                 //     Icons.list,
