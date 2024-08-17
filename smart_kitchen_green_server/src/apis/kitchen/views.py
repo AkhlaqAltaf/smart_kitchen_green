@@ -3,7 +3,7 @@ from rest_framework.permissions import AllowAny , IsAuthenticated
 from rest_framework.response import Response
 
 from src.apis.kitchen.serializers import ProductSerializer ,ApplianceSerializer
-from src.apps.kitchen.models import Product,Appliance
+from src.apis.kitchen.models import Product,Appliance
 
 
 class ProductApiView(viewsets.ModelViewSet):

@@ -6,7 +6,7 @@ from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.response import Response
 
 from src.apis.accounts.serializers import UserSerializer, VerifyEmailSerializer, CustomLoginSerializer
-from ...apps.accounts.models import CustomUser
+from src.apis.accounts.models import CustomUser
 from ...apps.whisper.main import Mailing
 
 

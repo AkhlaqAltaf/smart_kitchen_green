@@ -1,6 +1,6 @@
 from rest_framework import routers
 
-from src.apis.garden.views import PlantApiView
+from src.apis.garden.views import PlantApiView, ProductRecommendationOnLocationAPI
 
 from django.urls import  path, include
 
@@ -12,5 +12,9 @@ route.register(r'plant',PlantApiView)
 urlpatterns=[
 
     path('',include(route.urls)),
+    path(
+        'location/<str:longitude>/<str:latitude>/',
+        ProductRecommendationOnLocationAPI.as_view(), name='recommendation-on-location'
+    ),
 
 ]

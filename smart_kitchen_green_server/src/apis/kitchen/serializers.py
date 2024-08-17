@@ -1,5 +1,5 @@
 from rest_framework import  serializers
-from src.apps.kitchen.models import Product ,Appliance
+from src.apis.kitchen.models import Product ,Appliance
 
 
 class ProductSerializer(serializers.ModelSerializer):
