@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:smart_kitchen_green_app/routes/routes.dart';
 import 'package:smart_kitchen_green_app/theme/theme_helper.dart';
 
-void main() {
+void main() async {
+  // await dotenv.load(fileName: ".env");
+
   runApp(MyApp());
 }
 

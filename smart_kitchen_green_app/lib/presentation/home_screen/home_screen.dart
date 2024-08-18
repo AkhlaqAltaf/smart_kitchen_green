@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
             height: 150.0,
             width: 150.0,
           ),
-          Text("WELCOME BACK TO DEVELOPEMENT 8/10/2024",
+          Text("WELCOME BACK TO DEVELOPEMENT......",
               style: TextStyle(color: Colors.red)),
           SizedBox(height: 20),
           SizedBox(height: 10),
@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                     icon: Icons.inventory,
                     title: 'Integrated Grocery Assistant',
                     description: "",
-                    isKitchen: true,
+                    route: AppRoutes.kitchenProducts,
                     context: context),
                 _buildFeatureCard(
                     icon: Icons.notifications,
@@ -52,11 +52,13 @@ class HomeScreen extends StatelessWidget {
                     icon: Icons.kitchen,
                     title: 'Kitchen Appliance Connectivity',
                     description: '',
+                    route: AppRoutes.freezer,
                     context: context),
                 _buildFeatureCard(
                     icon: Icons.receipt,
                     title: 'Recipe Recommender',
                     description: '',
+                    route: AppRoutes.recipe,
                     context: context),
                 _buildFeatureCard(
                     icon: Icons.nature,
@@ -90,16 +92,14 @@ class HomeScreen extends StatelessWidget {
       {required IconData icon,
       required String title,
       required String description,
-      bool isKitchen = false,
+      String route = AppRoutes.kitchenProducts,
       required BuildContext context}) {
     return Card(
       elevation: 4,
       margin: const EdgeInsets.symmetric(vertical: 20),
       child: GestureDetector(
         onTap: () {
-          if (isKitchen) {
-            Navigator.pushNamed(context, AppRoutes.kitchenProducts);
-          }
+          Navigator.pushNamed(context, route);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,

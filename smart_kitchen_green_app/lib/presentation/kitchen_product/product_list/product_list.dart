@@ -4,6 +4,10 @@ import 'package:smart_kitchen_green_app/apis/kitchen_apis/delete_product.dart';
 import 'package:smart_kitchen_green_app/apis/kitchen_apis/get_kitche_produtcs.dart';
 import 'package:smart_kitchen_green_app/apis/kitchen_apis/update_kitchen_product.dart';
 import 'package:smart_kitchen_green_app/data_layer/kitchen/kitchen_product.dart';
+import 'package:smart_kitchen_green_app/presentation/kitchen_product/appliance/frezer.dart';
+import 'package:smart_kitchen_green_app/presentation/kitchen_product/appliance/oven.dart';
+import 'package:smart_kitchen_green_app/presentation/kitchen_product/product_list/image_search.dart';
+import 'package:smart_kitchen_green_app/presentation/kitchen_product/recipe/utube.dart';
 import 'package:smart_kitchen_green_app/routes/routes.dart';
 import 'package:smart_kitchen_green_app/theme/theme_helper.dart';
 import 'package:smart_kitchen_green_app/widgets/custom_appbar.dart';
@@ -104,64 +108,149 @@ class _KitchenProductsState extends State<KitchenProducts> {
           child: makeListTile(data, context),
         ),
       );
-
   ListTile makeListTile(Product data, BuildContext context) => ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        leading: Container(
-          padding: EdgeInsets.only(right: 12.0),
-          decoration: BoxDecoration(
-              border:
-                  Border(right: BorderSide(width: 1.0, color: Colors.white24))),
-          child: IconButton(
-            icon: Icon(Icons.edit, color: Colors.white),
-            onPressed: () {
-              _showEditDialog(data);
-            },
-          ),
-        ),
+        // Expiry date at the top in the center with label
         title: Column(
           children: [
-            Text(
-              data.name,
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(
+                "Expired on:",
+                style: TextStyle(color: const Color.fromARGB(255, 205, 17, 17)),
+              ),
+              Text(
+                " ${data.expiryDate}",
+                style: TextStyle(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: SizedBox(
+                    width: 50,
+                    child: LinearProgressIndicator(
+                      backgroundColor: const Color.fromARGB(255, 2, 101, 5),
+                      value: calculateProgress(data.expiryDate),
+                      valueColor: AlwaysStoppedAnimation(Colors.red),
+                    ),
+                  )),
+            ]),
+            SizedBox(
+              height: 20,
             ),
           ],
         ),
-        subtitle: Row(
+
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Expanded(
-                flex: 1,
-                child: Container(
-                  child: LinearProgressIndicator(
-                      backgroundColor: const Color.fromARGB(255, 2, 101, 5),
-                      value: calculateProgress(data.expiryDate),
-                      valueColor: AlwaysStoppedAnimation(Colors.red)),
-                )),
-            Expanded(
-              flex: 4,
-              child: Padding(
-                  padding: EdgeInsets.only(left: 10.0),
-                  child: Text("${data.expiryDate}",
-                      style: TextStyle(color: Colors.white))),
-            )
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ImageSearchPage(
+                            query: data.name, isFullPage: true)));
+                  },
+                  child: ImageSearchPage(
+                    query: data.name,
+                    isFullPage: false,
+                  ),
+                ),
+
+                // Avatar-shaped image on the left
+
+                SizedBox(width: 30),
+                // Title like WhatsApp (Image + Name)
+                Expanded(
+                  child: Text(
+                    data.name,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20),
+                  ),
+                ),
+                // Edit and Delete Icons on the right
+                IconButton(
+                  icon: Icon(Icons.edit, color: Colors.white),
+                  onPressed: () {
+                    _showEditDialog(data);
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.delete_forever_sharp, color: Colors.white),
+                  onPressed: () async {
+                    try {
+                      await deleteProduct(context, data.id!);
+                      setState(() {
+                        _futureProducts = fetchAndSortProducts();
+                      });
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error deleting product: $e')),
+                      );
+                    }
+                  },
+                ),
+              ],
+            ),
+            //
+            // Progress bar and expiry date
+
+            SizedBox(
+              height: 5,
+            ),
+            // Text buttons below the main content
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          RecipeRecommender(query: "${data.name}"),
+                    ));
+                  },
+                  child: Column(
+                    children: [
+                      Icon(Icons.food_bank, color: Colors.white),
+                      Text("Recipes", style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => OvenPage(),
+                    ));
+                  },
+                  child: Column(
+                    children: [
+                      Icon(Icons.icecream_rounded, color: Colors.white),
+                      Text("Put in Oven",
+                          style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => FreezerPage(),
+                    ));
+                  },
+                  child: Column(
+                    children: [
+                      Icon(Icons.heat_pump_sharp, color: Colors.white),
+                      Text("Put in Freezer",
+                          style: TextStyle(color: Colors.white)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ],
-        ),
-        trailing: IconButton(
-          onPressed: () async {
-            try {
-              await deleteProduct(context, data.id!);
-              setState(() {
-                _futureProducts = fetchAndSortProducts();
-              });
-            } catch (e) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Error deleting product: $e')),
-              );
-            }
-          },
-          icon:
-              Icon(Icons.delete_forever_sharp, color: Colors.white, size: 30.0),
         ),
       );
 
