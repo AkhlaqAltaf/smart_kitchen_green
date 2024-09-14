@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 
+from src.apis.garden.recommendation.ai_models.generate import generate_response
 from src.apis.garden.serializers import PlantSerializer
 from src.apis.garden.models import Plant
 
@@ -17,6 +18,7 @@ from src.external.weather.main import get_weather_data
 
 
 class PlantApiView(viewsets.ModelViewSet):
+
     queryset = Plant.objects.all()
     serializer_class = PlantSerializer
     permission_classes = [AllowAny]
@@ -51,7 +53,9 @@ class ProductRecommendationOnLocationAPI(APIView):
 
             # TODO: AI: IK
             prediction = Prediction(data=input_data)
+
             return Response(data=prediction.filter_predictions())
+
         except Exception as e:
             return Response(data={'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 

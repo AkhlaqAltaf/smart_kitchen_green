@@ -1,5 +1,9 @@
+import json
+
 import joblib
 import pandas as pd
+
+from src.apis.garden.recommendation.ai_models.generate import generate_response
 from src.apis.garden.recommendation.data_process.process import get_processed_data
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
@@ -42,6 +46,8 @@ class Prediction:
         return predictions_model1
 
     def filter_predictions(self):
+
+
         executor = ThreadPoolExecutor()
         self.predictions_model1 = self.get_predictions_parallel(self.processed_data, executor)
         executor.shutdown()
@@ -49,7 +55,24 @@ class Prediction:
         return self.combine_predictions()
 
     def combine_predictions(self):
-        predictions_model1 = self.process_predictions(self.predictions_model1, self.processed_model_model1)
+        try:
+            data = generate_response()
+            data = json.loads(data)
+
+            predictions_model1 = [
+                {
+                    "name": plant["name"],
+                    "category": plant["category"],
+                    "bestgrow": plant["bestgrow"],
+                    "network_image_address": plant["network_image_address"]
+                }
+
+                for plant in data["plants"]
+            ]
+
+        except Exception as e:
+            print(e)
+            predictions_model1 = self.process_predictions(self.predictions_model1, self.processed_model_model1)
         return predictions_model1
 
     def process_predictions(self, predictions, processed_model):

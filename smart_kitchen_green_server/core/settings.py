@@ -33,6 +33,7 @@ SECRET_KEY = 'django-insecure-d3h&f)$)_kv4#pw-oscu$e(be29pfi2lci68vw^&ki#e$^$@sl
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 
@@ -58,6 +59,7 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'dj_rest_auth.registration',
     'drf_yasg',
+    'corsheaders',
 
     # 'allauth',
     # 'allauth.account',
@@ -73,6 +75,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # Add this line
+    'django.middleware.common.CommonMiddleware',  # Ensure this is present
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -168,4 +172,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = env('host_mail')
 EMAIL_HOST_PASSWORD = env('host_mail_password')
+API_KEY = env('API_KEY')
 EMAIL_USE_TLS = True
