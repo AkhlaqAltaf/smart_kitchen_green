@@ -14,4 +14,8 @@ class Urls {
 // KICTHEN PRODUCTS
 
   static String kitchenProductUrl = '$serverUrl/api/kitchen/product/';
+
+  // PLANT URLs
+
+  static String recommended_plants = '$serverUrl/api/garden/location/';
 }

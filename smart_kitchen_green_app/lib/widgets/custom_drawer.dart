@@ -62,7 +62,7 @@ Drawer drawer(BuildContext context) {
                     ),
                   ),
                   onTap: () {
-                    Navigator.of(context).pushNamed(AppRoutes.kitchenProducts);
+                    Navigator.of(context).pushNamed(AppRoutes.mycrops);
                     // downloadInvitationCard(context, 4);
                     // Navigator.pop(context);
                   },

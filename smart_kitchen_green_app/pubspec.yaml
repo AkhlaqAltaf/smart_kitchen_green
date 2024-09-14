@@ -37,6 +37,8 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
+  flutter_svg: 
+
   # ADD PRODUCT
   mobile_scanner: ^5.1.1
   barcode_scan2: ^4.3.1
@@ -52,6 +54,9 @@ dependencies:
 
   http: 
   shared_preferences:
+
+  location:
+
   
 
 
@@ -82,6 +87,8 @@ flutter:
     - assets/logo/
     - assets/images/
     - assets/appliance/
+    - assets/plants/icons/
+    - assets/plants/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
