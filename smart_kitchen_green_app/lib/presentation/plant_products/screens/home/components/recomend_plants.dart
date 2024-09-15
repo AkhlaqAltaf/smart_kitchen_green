@@ -1,67 +1,69 @@
 import 'package:flutter/material.dart';
+import 'package:smart_kitchen_green_app/apis/plant_apis/recommended_plants.dart';
+import 'package:smart_kitchen_green_app/data_layer/plants/plant.dart';
 import 'package:smart_kitchen_green_app/presentation/plant_products/screens/details/details_screen.dart';
 
 import '../../../constants.dart';
 
-class RecomendsPlants extends StatelessWidget {
+class RecomendPlants extends StatefulWidget {
+  const RecomendPlants({super.key});
+
+  @override
+  State<RecomendPlants> createState() => _RecomendPlantsState();
+}
+
+class _RecomendPlantsState extends State<RecomendPlants> {
+  @override
+  void initState() {
+    super.initState();
+    fetchPlants();
+  }
+
+  List<Plant> plants = [];
+
+  void fetchPlants() async {
+    try {
+      plants = await fetchRecomendations(context);
+      
+      if (plants.isNotEmpty) {
+        print("PLANT IMAGE:" + plants.first.img);
+      } else {
+        print("No plants found");
+      }
+      setState(() {});
+    } catch (e) {
+      print("Error fetching plants: $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: <Widget>[
-          RecomendPlantCard(
-            image: "assets/plants/images/image_1.png",
-            title: "Samantha",
-            country: "Elovera",
-            category: "Flower",
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailsScreen(),
-                ),
-              );
-            },
+        children: List.generate(
+          plants.length,
+          (index) => RecomendPlantCard(
+            image: plants[index].img,
+            title: plants[index].name,
+            category: plants[index].category,
+            index: index,
           ),
-          RecomendPlantCard(
-            image: "assets/plants/images/image_2.png",
-            title: "Angelica",
-            country: "Russia",
-            category: "Vegitable",
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailsScreen(),
-                ),
-              );
-            },
-          ),
-          RecomendPlantCard(
-            image: "assets/plants/images/image_3.png",
-            title: "Samantha",
-            country: "Russia",
-            category: "Fruit",
-            press: () {},
-          ),
-        ],
+        ),
       ),
     );
   }
 }
 
 class RecomendPlantCard extends StatelessWidget {
-  final String image, title, country;
+  final String image, title;
   final String category;
-  final Function press;
+  final int index;
   const RecomendPlantCard({
     required this.image,
     required this.title,
-    required this.country,
     required this.category,
-    required this.press,
+    required this.index,
   });
 
   @override
@@ -76,11 +78,16 @@ class RecomendPlantCard extends StatelessWidget {
       width: size.width * 0.4,
       child: Column(
         children: <Widget>[
-          Image.asset(image),
+          image.startsWith('http')
+              ? Image.network(image) // For network images
+              : Image.asset(image), // For asset images
           GestureDetector(
             onTap: () {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => DetailsScreen()));
+                MaterialPageRoute(
+                  builder: (context) => DetailsScreen(),
+                ),
+              );
             },
             child: Container(
               padding: EdgeInsets.all(kDefaultPadding / 2),
@@ -104,8 +111,9 @@ class RecomendPlantCard extends StatelessWidget {
                     text: TextSpan(
                       children: [
                         TextSpan(
-                            text: "$title\n".toUpperCase(),
-                            style: Theme.of(context).textTheme.bodySmall),
+                          text: "$title\n".toUpperCase(),
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
                         TextSpan(
                           text: "$title".toUpperCase(),
                           style: TextStyle(
@@ -117,12 +125,12 @@ class RecomendPlantCard extends StatelessWidget {
                   ),
                   Spacer(),
                   Text(
-                    '\ ${category}',
+                    '$category',
                     style: Theme.of(context)
                         .textTheme
                         .labelLarge
                         ?.copyWith(color: kPrimaryColor),
-                  )
+                  ),
                 ],
               ),
             ),

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:location/location.dart';
+import 'package:smart_kitchen_green_app/apis/externals/locations.dart';
 import '../../../constants.dart';
 
-class HeaderWithSearchBox extends StatelessWidget {
+class HeaderWithSearchBox extends StatefulWidget {
   final Size size;
 
   HeaderWithSearchBox({
@@ -11,11 +12,40 @@ class HeaderWithSearchBox extends StatelessWidget {
   });
 
   @override
+  _HeaderWithSearchBoxState createState() => _HeaderWithSearchBoxState();
+}
+
+class _HeaderWithSearchBoxState extends State<HeaderWithSearchBox> {
+  String cityName = "Loading...";
+
+  @override
+  void initState() {
+    super.initState();
+    fetchLocation();
+  }
+
+  Future<void> fetchLocation() async {
+    try {
+      LocationData locationData = await getCurrentLocation();
+      double latitude = locationData.latitude!;
+      double longitude = locationData.longitude!;
+
+      Map<String, dynamic> address = await getCityName(latitude, longitude);
+      setState(() {
+        cityName = address['city'] + ", " + address['country'];
+      });
+    } catch (e) {
+      setState(() {
+        cityName = "Unknown";
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: kDefaultPadding * 2.5),
-      // It will cover 20% of our total height
-      height: size.height * 0.2,
+      height: widget.size.height * 0.2,
       child: Stack(
         children: <Widget>[
           Container(
@@ -24,7 +54,7 @@ class HeaderWithSearchBox extends StatelessWidget {
               right: kDefaultPadding,
               bottom: 36 + kDefaultPadding,
             ),
-            height: size.height * 0.2 - 27,
+            height: widget.size.height * 0.2 - 27,
             decoration: BoxDecoration(
               color: Theme.of(context).appBarTheme.backgroundColor,
               borderRadius: BorderRadius.only(
@@ -40,7 +70,17 @@ class HeaderWithSearchBox extends StatelessWidget {
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
-                Image.asset("assets/plants/images/logo.png")
+
+                Icon(
+                  Icons.location_city,
+                  color: Colors.white,
+                ),
+                Text(
+                  " " + cityName,
+                  style: TextStyle(color: Colors.white),
+                ),
+
+                // Image.asset("assets/plants/images/logo.png"),
               ],
             ),
           ),
@@ -76,9 +116,6 @@ class HeaderWithSearchBox extends StatelessWidget {
                         ),
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
-                        // surffix isn't working properly  with SVG
-                        // thats why we use row
-                        // suffixIcon: SvgPicture.asset("assets/icons/search.svg"),
                       ),
                     ),
                   ),

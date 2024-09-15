@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:smart_kitchen_green_app/PRIVATE_KEYS.dart';
 import 'package:smart_kitchen_green_app/widgets/custom_appbar.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -51,7 +52,7 @@ class _YouTubeVideoPageState extends State<YouTubeVideoPage> {
   }
 
   Future<void> fetchYouTubeVideos(String query) async {
-    final apiKey = '';
+    const apiKey = googleApiKey;
     final url =
         'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=$query&type=video&key=$apiKey';
 

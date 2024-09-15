@@ -1,5 +1,6 @@
 import 'package:location/location.dart';
-import 'dart:math';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 Future<LocationData> getCurrentLocation() async {
   Location location = Location();
@@ -28,19 +29,38 @@ Future<LocationData> getCurrentLocation() async {
   return locationData;
 }
 
-double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-  const R = 6371; // Radius of the Earth in kilometers
-  final dLat = _degreesToRadians(lat2 - lat1);
-  final dLon = _degreesToRadians(lon2 - lon1);
-  final a = sin(dLat / 2) * sin(dLat / 2) +
-      cos(_degreesToRadians(lat1)) *
-          cos(_degreesToRadians(lat2)) *
-          sin(dLon / 2) *
-          sin(dLon / 2);
-  final c = 2 * atan2(sqrt(a), sqrt(1 - a));
-  return R * c;
-}
+Future<Map<String, dynamic>> getCityName(
+    double latitude, double longitude) async {
+  final url = Uri.parse(
+      'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=$latitude&lon=$longitude&accept-language=en');
 
-double _degreesToRadians(double degrees) {
-  return degrees * pi / 180;
+  final response = await http.get(url);
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    // print(data);
+
+    if (data.containsKey('address') && data['address'].containsKey('city')) {
+      return {
+        'city': data['address']['city'],
+        "country": data['address']['country']
+      };
+    } else if (data.containsKey('address') &&
+        data['address'].containsKey('town')) {
+      return {
+        'city': data['address']['town'],
+        "country": data['address']['country']
+      };
+    } else if (data.containsKey('address') &&
+        data['address'].containsKey('village')) {
+      return {
+        'city': data['address']['village'],
+        "country": data['address']['country']
+      };
+    }
+  } else {
+    throw Exception('Failed to get city name');
+  }
+
+  return {'city': "Unknown", 'country': 'unknown'};
 }

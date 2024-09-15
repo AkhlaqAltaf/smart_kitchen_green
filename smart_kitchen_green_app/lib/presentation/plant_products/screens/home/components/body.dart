@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
+import 'package:smart_kitchen_green_app/apis/externals/locations.dart';
 import 'package:smart_kitchen_green_app/presentation/plant_products/constants.dart';
 
 import 'featurred_plants.dart';
@@ -18,7 +20,7 @@ class Body extends StatelessWidget {
         children: <Widget>[
           HeaderWithSearchBox(size: size),
           TitleWithMoreBtn(title: "Recomended", press: () {}),
-          RecomendsPlants(),
+          RecomendPlants(),
           TitleWithMoreBtn(title: "Featured Plants", press: () {}),
           FeaturedPlants(),
           SizedBox(height: kDefaultPadding),
