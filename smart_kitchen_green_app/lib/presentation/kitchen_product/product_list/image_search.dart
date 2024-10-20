@@ -23,9 +23,9 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
   }
 
   Future<void> fetchImageUrl(String query) async {
-    final apiKey = '';
+    final apiKey = "AIzaSyDRMtWE7SNna6eH1yoqdghqZUwdaxccUhU";
 
-    final cx = '';
+    final cx = 'd1c7be19190ee4c9c';
     final url =
         'https://www.googleapis.com/customsearch/v1?q=$query&cx=$cx&key=$apiKey&searchType=image&num=1';
     final response = await http.get(Uri.parse(url));

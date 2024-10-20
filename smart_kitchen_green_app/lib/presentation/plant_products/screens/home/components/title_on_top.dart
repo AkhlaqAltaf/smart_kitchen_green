@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 
-class TitleWithMoreBtn extends StatelessWidget {
+class TitleOnTop extends StatelessWidget {
   final String title;
-  final Function press;
-  const TitleWithMoreBtn({
+  const TitleOnTop({
     required this.title,
-    required this.press,
   });
 
   @override
@@ -15,25 +13,9 @@ class TitleWithMoreBtn extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
       child: Row(
-
-        
         children: <Widget>[
           TitleWithCustomUnderline(text: title),
           Spacer(),
-          TextButton(
-            style: TextButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              backgroundColor: Theme.of(context).primaryColor,
-            ),
-
-            onPressed: () => press,
-            child: Text(
-              "More",
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
         ],
       ),
     );

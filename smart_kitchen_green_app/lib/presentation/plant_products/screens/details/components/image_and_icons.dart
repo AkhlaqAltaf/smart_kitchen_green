@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:smart_kitchen_green_app/data_layer/plants/plant.dart';
 
 import '../../../constants.dart';
 import 'icon_card.dart';
@@ -7,7 +8,9 @@ import 'icon_card.dart';
 class ImageAndIcons extends StatelessWidget {
   const ImageAndIcons({
     required this.size,
+    required this.plant,
   });
+  final Plant plant;
 
   final Size size;
 
@@ -36,10 +39,22 @@ class ImageAndIcons extends StatelessWidget {
                       ),
                     ),
                     // Spacer(),
-                    IconCard(icon: "assets/plants/icons/sun.svg"),
-                    IconCard(icon: "assets/plants/icons/icon_2.svg"),
-                    IconCard(icon: "assets/plants/icons/icon_3.svg"),
-                    IconCard(icon: "assets/plants/icons/icon_4.svg"),
+                    IconCard(
+                      icon: "assets/plants/icons/sun.svg",
+                      plant: plant,
+                    ),
+                    IconCard(
+                      icon: "assets/plants/icons/icon_2.svg",
+                      plant: plant,
+                    ),
+                    IconCard(
+                      icon: "assets/plants/icons/icon_3.svg",
+                      plant: plant,
+                    ),
+                    IconCard(
+                      icon: "assets/plants/icons/icon_4.svg",
+                      plant: plant,
+                    ),
                   ],
                 ),
               ),
@@ -62,7 +77,7 @@ class ImageAndIcons extends StatelessWidget {
                 image: DecorationImage(
                   alignment: Alignment.centerLeft,
                   fit: BoxFit.cover,
-                  image: AssetImage("assets/plants/images/img.png"),
+                  image: NetworkImage(plant.img),
                 ),
               ),
             ),

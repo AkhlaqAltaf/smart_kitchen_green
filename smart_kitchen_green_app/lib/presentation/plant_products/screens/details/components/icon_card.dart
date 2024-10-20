@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:smart_kitchen_green_app/data_layer/plants/plant.dart';
 
 import '../../../constants.dart';
 
 class IconCard extends StatelessWidget {
   final String icon;
+  final Plant plant;
 
   const IconCard({
     required this.icon,
+    required this.plant,
   });
 
   @override

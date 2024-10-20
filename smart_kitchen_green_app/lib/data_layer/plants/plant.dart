@@ -18,6 +18,6 @@ class Plant {
         name: json['name'],
         category: json['category'],
         bestgrow: json['bestgrow'],
-        img: json['img']);
+        img: json['img'] != null ? json['img'] : ".jpg");
   }
 }

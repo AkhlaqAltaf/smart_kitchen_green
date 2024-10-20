@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:location/location.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_kitchen_green_app/apis/externals/locations.dart';
+import 'package:smart_kitchen_green_app/data_layer/providers/plants_record_provider.dart';
 import '../../../constants.dart';
 
-class HeaderWithSearchBox extends StatefulWidget {
+class HeaderWithSearchBox extends StatelessWidget {
   final Size size;
 
   HeaderWithSearchBox({
@@ -12,40 +15,10 @@ class HeaderWithSearchBox extends StatefulWidget {
   });
 
   @override
-  _HeaderWithSearchBoxState createState() => _HeaderWithSearchBoxState();
-}
-
-class _HeaderWithSearchBoxState extends State<HeaderWithSearchBox> {
-  String cityName = "Loading...";
-
-  @override
-  void initState() {
-    super.initState();
-    fetchLocation();
-  }
-
-  Future<void> fetchLocation() async {
-    try {
-      LocationData locationData = await getCurrentLocation();
-      double latitude = locationData.latitude!;
-      double longitude = locationData.longitude!;
-
-      Map<String, dynamic> address = await getCityName(latitude, longitude);
-      setState(() {
-        cityName = address['city'] + ", " + address['country'];
-      });
-    } catch (e) {
-      setState(() {
-        cityName = "Unknown";
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: kDefaultPadding * 2.5),
-      height: widget.size.height * 0.2,
+      height: size.height * 0.2,
       child: Stack(
         children: <Widget>[
           Container(
@@ -54,7 +27,7 @@ class _HeaderWithSearchBoxState extends State<HeaderWithSearchBox> {
               right: kDefaultPadding,
               bottom: 36 + kDefaultPadding,
             ),
-            height: widget.size.height * 0.2 - 27,
+            height: size.height * 0.2 - 27,
             decoration: BoxDecoration(
               color: Theme.of(context).appBarTheme.backgroundColor,
               borderRadius: BorderRadius.only(
@@ -70,17 +43,20 @@ class _HeaderWithSearchBoxState extends State<HeaderWithSearchBox> {
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 Spacer(),
-
                 Icon(
                   Icons.location_city,
                   color: Colors.white,
                 ),
-                Text(
-                  " " + cityName,
-                  style: TextStyle(color: Colors.white),
-                ),
-
-                // Image.asset("assets/plants/images/logo.png"),
+                // ValueListenableBuilder<String>(
+                //   valueListenable:
+                //       Provider.of<RecordProvider>(context).cityCountry,
+                //   builder: (context, value, child) {
+                //     return Text(
+                //       " " + value,
+                //       style: TextStyle(fontSize: 16, color: Colors.white),
+                //     );
+                //   },
+                // ),
               ],
             ),
           ),

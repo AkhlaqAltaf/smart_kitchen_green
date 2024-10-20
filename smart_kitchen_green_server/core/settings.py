@@ -172,5 +172,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = env('host_mail')
 EMAIL_HOST_PASSWORD = env('host_mail_password')
+UNSPLASH_API_KEY = env('UNSPLASH_API_KEY')
 API_KEY = env('API_KEY')
 EMAIL_USE_TLS = True

@@ -13,7 +13,7 @@ urlpatterns=[
 
     path('',include(route.urls)),
     path(
-        'location/<str:longitude>/<str:latitude>/',
+        'location/<str:longitude>/<str:latitude>/<str:address>/<str:is_more>/',
         ProductRecommendationOnLocationAPI.as_view(), name='recommendation-on-location'
     ),
 

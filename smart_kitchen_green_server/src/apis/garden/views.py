@@ -1,7 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
 
-from src.apis.garden.recommendation.ai_models.generate import generate_response
 from src.apis.garden.serializers import PlantSerializer
 from src.apis.garden.models import Plant
 
@@ -33,6 +32,11 @@ class ProductRecommendationOnLocationAPI(APIView):
     def get(self, request, *args, **kwargs):
         latitude = self.kwargs.get('latitude')
         longitude = self.kwargs.get('longitude')
+        address = self.kwargs.get('address')
+        is_more = self.kwargs.get('is_more')
+        is_more = bool(is_more)
+
+
 
         try:
             # CONVERT TO FLOAT -- ISSUE HERE
@@ -52,7 +56,7 @@ class ProductRecommendationOnLocationAPI(APIView):
             }
 
             # TODO: AI: IK
-            prediction = Prediction(data=input_data)
+            prediction = Prediction(data=input_data,address=address,is_more=is_more)
 
             return Response(data=prediction.filter_predictions())
 

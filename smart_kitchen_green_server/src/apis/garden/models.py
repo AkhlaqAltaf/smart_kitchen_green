@@ -19,3 +19,14 @@ class Plant(models.Model):
         return self.name
 
 
+
+class RecommendedPlants(models.Model):
+    name = models.CharField(max_length=100)
+    category = models.CharField(max_length=100)
+    bestgrow = models.CharField(max_length=100)
+    img = models.CharField(max_length=100)
+    date = models.CharField(max_length=50,blank=True,null=True)
+    address = models.CharField(max_length=100,blank=True,null=True)
+    water_time = models.CharField(max_length=100,blank=True,null=True)
+
+
