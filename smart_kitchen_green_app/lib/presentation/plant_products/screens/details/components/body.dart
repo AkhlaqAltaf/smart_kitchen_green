@@ -18,67 +18,82 @@ class Body extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(top: 10),
-            width: MediaQuery.of(context).size.width,
-            color: Colors.green,
-            height: 3,
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 10),
-            width: MediaQuery.of(context).size.width,
-            color: Colors.green,
-            height: 3,
-          ),
-          Padding(
-            padding: EdgeInsets.all(30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                    child: Row(
-                  children: [
-                    Text(
-                      " " + plant.name,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green,
-                        wordSpacing: 2,
-                        letterSpacing: 2,
-                      ),
-                    ),
-                  ],
-                )),
-                Container(
-                    child: Row(
-                  children: [
-                    Icon(Icons.category),
-                    Text(
-                      " " + plant.category,
-                      style: TextStyle(),
-                    ),
-                  ],
-                )),
-                Container(
-                    child: Row(
-                  children: [
-                  
-                    Text(
-                      " " + plant.bestgrow,
-                      style: TextStyle(),
-                    ),
-                  ],
-                ))
-              ],
+          // Container(
+          //   margin: EdgeInsets.only(top: 10),
+          //   width: MediaQuery.of(context).size.width,
+          //   color: Colors.green,
+          //   height: 3,
+          // ),
+          // Container(
+          //   margin: EdgeInsets.only(top: 10),
+          //   width: MediaQuery.of(context).size.width,
+          //   color: Colors.green,
+          //   height: 3,
+          // ),
+          Stack(children: <Widget>[
+            ImageAndIcons(
+              size: size,
+              plant: plant,
             ),
-          ),
-          ImageAndIcons(
-            size: size,
-            plant: plant,
-          ),
-          SizedBox(height: kDefaultPadding),
+            Positioned(
+              bottom: 60,
+              left: 60,
+              child: Padding(
+                padding: EdgeInsets.all(30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                        child: Row(
+                      children: [
+                        Text(
+                          " " + plant.name,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green,
+                            wordSpacing: 2,
+                            letterSpacing: 2,
+                          ),
+                        ),
+                      ],
+                    )),
+                    Container(
+                        child: Row(
+                      children: [
+                        Icon(Icons.category),
+                        Text(
+                          " " + plant.category,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    )),
+                    Container(
+                        child: Row(
+                      children: [
+                        Text(
+                          " " + plant.bestgrow,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    )),
+                    Container(
+                        child: Row(
+                      children: [
+                        Icon(Icons.timer),
+                        Text(
+                          " Need water After" + plant.water_time + " hour",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    )),
+                  ],
+                ),
+              ),
+            ),
+          ]),
+          SizedBox(height: 5),
           Row(
             children: <Widget>[
               SizedBox(

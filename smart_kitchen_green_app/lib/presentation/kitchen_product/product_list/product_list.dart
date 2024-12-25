@@ -98,13 +98,13 @@ class _KitchenProductsState extends State<KitchenProducts> {
         margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
         child: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                theme.colorScheme.primary,
-                appTheme.blueGray500C6,
-              ],
-            ),
-          ),
+              gradient: LinearGradient(
+                colors: [
+                  theme.colorScheme.primary,
+                  appTheme.blueGray500C6,
+                ],
+              ),
+              borderRadius: BorderRadius.circular(20)),
           child: makeListTile(data, context),
         ),
       );

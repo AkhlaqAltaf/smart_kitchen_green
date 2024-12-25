@@ -57,7 +57,7 @@ class _ImageSearchPageState extends State<ImageSearchPage> {
     } else {
       return imageUrl != null
           ? CircleAvatar(
-              backgroundImage: NetworkImage(imageUrl!),
+              backgroundImage: AssetImage("assets/images/b.jpg"),
               radius: 45.0,
             )
           : CircularProgressIndicator();
