@@ -4,9 +4,9 @@ from django.contrib import admin
 
 @admin.register(Plant)
 class PlantAdmin(admin.ModelAdmin):
-    list_display = ('name', 'planting_date', 'user')
-    search_fields = ('name', 'user')
-    list_filter = ('name', 'user', 'planting_date', 'created_at')
+    list_display = ('recommended_plant', 'planting_date', 'user')
+    search_fields = ('recommended_plant', 'user')
+    list_filter = ('recommended_plant', 'user', 'planting_date', 'created_at')
     ordering = ('-created_at',)
 
 

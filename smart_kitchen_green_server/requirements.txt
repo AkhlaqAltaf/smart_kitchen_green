@@ -11,3 +11,6 @@ setuptools
 joblib
 requests_cache
 retry_requests
+firebase-admin
+celery
+redis

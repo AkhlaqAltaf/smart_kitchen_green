@@ -22,50 +22,50 @@ class ImageAndIcons extends StatelessWidget {
         height: size.height * 0.7,
         child: Row(
           children: <Widget>[
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 0.09),
-                child: Column(
-                  children: <Widget>[
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: IconButton(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                        icon: SvgPicture.asset("assets/icons/back_arrow.svg"),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ),
-                    // Spacer(),
-                    IconCard(
-                      icon: "assets/plants/icons/sun.svg",
-                      plant: plant,
-                    ),
-                    IconCard(
-                      icon: "assets/plants/icons/icon_2.svg",
-                      plant: plant,
-                    ),
-                    IconCard(
-                      icon: "assets/plants/icons/icon_3.svg",
-                      plant: plant,
-                    ),
-                    IconCard(
-                      icon: "assets/plants/icons/icon_4.svg",
-                      plant: plant,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // Expanded(
+            //   child: Padding(
+            //     padding: const EdgeInsets.symmetric(vertical: 0.09),
+            //     child: Column(
+            //       children: <Widget>[
+            //         Align(
+            //           alignment: Alignment.topLeft,
+            //           child: IconButton(
+            //             padding:
+            //                 EdgeInsets.symmetric(horizontal: kDefaultPadding),
+            //             icon: SvgPicture.asset("assets/icons/back_arrow.svg"),
+            //             onPressed: () {
+            //               Navigator.pop(context);
+            //             },
+            //           ),
+            //         ),
+            //         // Spacer(),
+            //         IconCard(
+            //           icon: "assets/plants/icons/sun.svg",
+            //           plant: plant,
+            //         ),
+            //         IconCard(
+            //           icon: "assets/plants/icons/icon_2.svg",
+            //           plant: plant,
+            //         ),
+            //         IconCard(
+            //           icon: "assets/plants/icons/icon_3.svg",
+            //           plant: plant,
+            //         ),
+            //         IconCard(
+            //           icon: "assets/plants/icons/icon_4.svg",
+            //           plant: plant,
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             Container(
               height: size.height * 0.65,
-              width: size.width * 0.75,
+              width: size.width * 0.99,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(63),
-                  bottomLeft: Radius.circular(63),
+                  topLeft: Radius.circular(53),
+                  bottomLeft: Radius.circular(53),
                 ),
                 boxShadow: [
                   BoxShadow(

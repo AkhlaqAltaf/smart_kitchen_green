@@ -12,13 +12,14 @@ User = get_user_model()
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'email', 'password')
+        fields = ('id', 'email', 'password','device_token')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         user = CustomUser.objects.create_user(
             email=validated_data['email'],
-            password=validated_data['password']
+            password=validated_data['password'],
+            device_token=validated_data['device_token']
         )
         code = user.verification_code
         mail = Mailing()
@@ -60,6 +61,8 @@ class VerifyEmailSerializer(serializers.Serializer):
 
 
 class CustomLoginSerializer(DefaultLoginSerializer):
+    device_token = serializers.CharField(required=False, write_only=True)
+
     def validate(self, attrs):
         email = attrs.get('email')
         password = attrs.get('password')
@@ -69,11 +72,17 @@ class CustomLoginSerializer(DefaultLoginSerializer):
             if user:
                 # Skip the allauth email verification check
                 if not user.is_active:
-                    msg = _('User account is disabled.')
+                    msg = _('User  account is disabled.')
                     raise serializers.ValidationError(msg)
                 elif not user.is_verified:
-                    msg = _('User Email is Not Verified.')
+                    msg = _('User  Email is Not Verified.')
                     raise serializers.ValidationError(msg)
+
+                # Update the device token if provided
+                device_token = attrs.get('device_token')
+                if device_token:
+                    user.device_token = device_token
+                    user.save()
 
             else:
                 msg = _('Unable to log in with provided credentials.')
@@ -88,10 +97,6 @@ class CustomLoginSerializer(DefaultLoginSerializer):
     def authenticate(self, **kwargs):
         from django.contrib.auth import authenticate
         return authenticate(**kwargs)
-
-
-
-
 
 
 

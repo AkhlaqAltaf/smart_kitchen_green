@@ -14,6 +14,32 @@ import os
 import environ
 from pathlib import Path
 
+# CELERY SETUP
+
+# core/settings.py
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # For Redis
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+  # Use Redis as the broker
+CELERY_BEAT_SCHEDULE = {
+    'check_appliance_runtime': {
+        'task': 'src.apis.kitchen.tasks.check_appliance_runtime',
+        'schedule': 1.0,  # Run every second (1.0 means every second)
+    },
+    'check_expiry_dates': {
+        'task': 'src.apis.kitchen.tasks.check_expiry_dates',  # Replace 'your_app' with your actual app name
+        'schedule': 12.0,  # Run every second (1.0 means every second)
+    },
+
+    'check_water_dates': {
+        'task': 'src.apis.garden.tasks.check_plants_watering',
+        'schedule': 86400.0,  # Run once every 24 hours (86400 seconds)
+    },
+}
+TIME_ZONE = 'UTC'  # or your preferred time zone
+CELERY_TIMEZONE = 'UTC'  # or your preferred time zone
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 

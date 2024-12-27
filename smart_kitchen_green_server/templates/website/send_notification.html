@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Notification - SmartKitchenGreen{% endblock %}
+
+{% block content %}
+    <h1>Send Test Notification</h1>
+
+    <form method="POST" id="notification-form">
+        {% csrf_token %}
+        <label for="user_id">Select User:</label>
+        <select name="user_id" id="user_id">
+            <option value="">--Select User--</option>
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.email }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Send Notification</button>
+    </form>
+
+    <div id="message"></div>
+
+    <script>
+        document.getElementById("notification-form").addEventListener("submit", function(event){
+            event.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch(window.location.href, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("message").innerHTML = data.message;
+            })
+            .catch(error => {
+                document.getElementById("message").innerHTML = "An error occurred.";
+            });
+        });
+    </script>
+
+{% endblock content %}

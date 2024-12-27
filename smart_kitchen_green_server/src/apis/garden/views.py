@@ -16,15 +16,66 @@ from src.external.weather.main import get_weather_data
 
 
 
-class PlantApiView(viewsets.ModelViewSet):
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from .models import Plant, RecommendedPlants
+from .serializers import PlantSerializer
+from django.utils import timezone
 
-    queryset = Plant.objects.all()
-    serializer_class = PlantSerializer
-    permission_classes = [AllowAny]
+class PlantAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        plants = Plant.objects.filter(user=request.user)
+        serializer = PlantSerializer(plants, many=True)
+        return Response(serializer.data)
 
 
+    def post(self, request):
+        recommended_plant_id = request.data.get('recommended_plant')
+        print(recommended_plant_id)
+        user = request.user
 
+        try:
+            recommended_plant = RecommendedPlants.objects.get(id=recommended_plant_id)
+        except RecommendedPlants.DoesNotExist:
+            return Response({"error": "Recommended plant not found."}, status=status.HTTP_404_NOT_FOUND)
 
+        # Create a new Plant instance
+        plant = Plant(
+            user=user,
+            recommended_plant=recommended_plant,
+            planting_date=timezone.now().date(),  # Set the planting date to today
+            last_watering=None,  # You can set this to None or any default value
+            created_at=timezone.now(),
+            updated_at=timezone.now()
+        )
+        plant.save()
+
+        serializer = PlantSerializer(plant)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def put(self, request, pk):
+        try:
+            plant = Plant.objects.get(pk=pk, user=request.user)
+        except Plant.DoesNotExist:
+            return Response({"error": "Plant not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = PlantSerializer(plant, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        try:
+            plant = Plant.objects.get(pk=pk, user=request.user)
+            plant.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except Plant.DoesNotExist:
+            return Response({"error": "Plant not found."}, status=status.HTTP_404_NOT_FOUND)
 
 # VERIFIED
 class ProductRecommendationOnLocationAPI(APIView):

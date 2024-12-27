@@ -33,7 +33,9 @@ Future<List<Plant>> fetchRecomendations(context, ismore) async {
       List<Plant> plants = [];
       Iterable jsonResponse = json.decode(response.body);
       jsonResponse.forEach((element) {
+        print(element);
         Plant product = Plant.fromJson(element);
+
         plants.add(product);
       });
       Provider.of<RecordProvider>(context, listen: false)

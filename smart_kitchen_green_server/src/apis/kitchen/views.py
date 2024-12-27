@@ -1,6 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.permissions import AllowAny , IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from src.apis.kitchen.serializers import ProductSerializer ,ApplianceSerializer
 from src.apis.kitchen.models import Product,Appliance
@@ -33,14 +34,38 @@ class ProductApiView(viewsets.ModelViewSet):
             serializer.save(user=user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+class CreateApplianceView(APIView):
+    def post(self, request):
+        # Extract product ID and take_time from request data
+        product_id = request.data.get('product')
+        take_time = request.data.get('mints')
+
+        if not product_id:
+            return Response({"error": "Product ID is required."}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Get the authenticated user
+        user = request.user
+        print("USER : ", user.id)
+
+        try:
+            # Fetch the product from the database
+            product = Product.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            return Response({"error": "Product not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        # Create an instance of the Appliance model
+        appliance_data = {
+            "product": product.id,  # product as ID since it's a ForeignKey
+            "take_time": take_time,
+        }
+
+        serializer = ApplianceSerializer(data=appliance_data)
+
+        if serializer.is_valid():
+            # Save the serializer with the user and product ForeignKey objects
+            appliance = serializer.save(user=user, product=product)
 
 
-
-
-
-
-
-class ApplianceApiView(viewsets.ModelViewSet):
-    queryset = Appliance.objects.all()
-    serializer_class = ApplianceSerializer
-    permission_classes = [AllowAny]
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
